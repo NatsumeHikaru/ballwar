@@ -19,9 +19,9 @@ class BallwarGameMenu{
 		</div>
 			`);
 		this.root.$ballwar_game.append(this.$menu);
-		this.$single_mode = this.$menu.find('ballwar-game-menu-field-item-single-mode');
-		this.$multi_mode = this.$menu.find('ballwar-game-menu-field-item-multi-mode');
-		this.$settings = this.$menu.find('ballwar-game-menu-field-item-settings');
+		this.$single_mode = this.$menu.find('.ballwar-game-menu-field-item-single-mode');
+		this.$multi_mode = this.$menu.find('.ballwar-game-menu-field-item-multi-mode');
+		this.$settings = this.$menu.find('.ballwar-game-menu-field-item-settings');
 
 		this.start();
 	}
