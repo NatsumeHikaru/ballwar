@@ -16,19 +16,16 @@
 
 @font-face{
 	font-family: 'ZKTSongXXSJW';
-	src: url('/static/fonts/menu/ZKTSongXXSJW.svg') format('svg'),
-		 url('/static/fonts/menu/ZKTSongXXSJW.eot') format('eot')
-		 url('/static/fonts/menu/ZKTSongXXSJW.ttf') format('truetype'),
-		 url('/static/fonts/menu/ZKTSongXXSJW.woff') format('woff'),
-		 url('/static/fonts/menu/ZKTSongXXSJW.woff2') format('woff2');
+	src:  url('/static/fonts/menu/ZKTSongXXSJW.TTF');
 }
 
 .ballwar-game-menu-field-item{
 	color: white;
 	height: 7vh;
 	width: 18vw;
+	font-family: 'ZKTSongXXSJW';
 	font-size: 6vh;
-	letter-spacing: 0.5vw;
+	letter-spacing: 0.6vw;
 	padding: 2vh;
 	text-align: center;
 	background-color: rgba(39, 21, 28, 0.6);
