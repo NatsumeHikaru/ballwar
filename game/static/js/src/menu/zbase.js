@@ -7,14 +7,17 @@ class BallwarGameMenu{
 				<div class="ballwar-game-menu-field-item ballwar-game-menu-field-item-single-mode">
 					单人模式
 				</div>
+				<img class="ballwar-game-menu-img-genshin ballwar-game-menu-img-genshin-single" src='/static/img/menu/zhongli.png'>
 				<br>
 				<div class="ballwar-game-menu-field-item ballwar-game-menu-field-item-multi-mode">
 					多人模式
 				</div>
+				<img class="ballwar-game-menu-img-genshin ballwar-game-menu-img-genshin-multi" src='/static/img/menu/xiao.png'>
 				<br>
 				<div class="ballwar-game-menu-field-item ballwar-game-menu-field-item-settings">
 					设置
 				</div>
+				<img class="ballwar-game-menu-img-genshin ballwar-game-menu-img-genshin-settings" src='/static/img/menu/paimeng.png'>
 			</div>
 		</div>
 			`);

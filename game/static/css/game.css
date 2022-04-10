@@ -37,3 +37,37 @@
 	transform: scale(1.08);
 	transition: 120ms;
 }
+
+.ballwar-game-menu-img-genshin{
+	position: absolute;
+	height: 8vh;
+	width: 9vh;
+	left: 82%;
+}
+
+.ballwar-game-menu-img-genshin-single{
+	top: 10%;
+}
+
+.ballwar-game-menu-img-genshin-multi{
+	top: 45%;
+}
+
+.ballwar-game-menu-img-genshin-settings{
+	top: 79%;
+}
+
+.ballwar-game-menu-field-item-single-mode:hover+.ballwar-game-menu-img-genshin-single{
+	transform: scale(1.1);
+	transition: 120ms;
+}
+
+.ballwar-game-menu-field-item-multi-mode:hover+.ballwar-game-menu-img-genshin-multi{
+	transform: scale(1.1);
+	transition: 120ms;
+}
+
+.ballwar-game-menu-field-item-settings:hover+.ballwar-game-menu-img-genshin-settings{
+	transform: scale(1.1);
+	transition: 120ms;
+}
