@@ -22,8 +22,8 @@ class BallwarGameObject{
 	destroy(){
 		this.on_destroy();
 		for(let i=0;i<BALLWAR_GAME_OBJECTS.length;i++){
-			if(BALLWAR_GAME_OBJECT[i] === this){
-				BALLWAR_GAME_OBJECT.splice(i, 1);
+			if(BALLWAR_GAME_OBJECTS[i] === this){
+				BALLWAR_GAME_OBJECTS.splice(i, 1);
 				break;
 			}
 		}
