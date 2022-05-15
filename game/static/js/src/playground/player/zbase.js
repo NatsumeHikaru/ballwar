@@ -7,18 +7,26 @@ class Player extends BallwarGameObject{
 		this.y = y;
 		this.vx = 0;
 		this.vy = 0;
+		this.damage_x = 0;
+		this.damage_y = 0;
+		this.damage_speed = 0;
 		this.move_length = 0;
 		this.radius = radius;
 		this.color = color;
 		this.speed = speed;
 		this.is_me = is_me;
 		this.eps = 0.1;
+		this.friction = 0.8;
 		this.cur_skill = null;
 	}
 
 	start(){
 		if(this.is_me){
 			this.add_listening_events();
+		}
+		else{
+			let tx = Math.random() * this.playground.width, ty = Math.random() * this.playground.height;
+			this.move_to(tx, ty);
 		}
 	}
 
@@ -55,7 +63,7 @@ class Player extends BallwarGameObject{
 		let color = "orange";
 		let speed = this.playground.height * 0.55;
 		let move_length = this.playground.height * 1;
-		new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length);
+		new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
 	}
 
 	get_dist(x1, y1, x2, y2){
@@ -69,19 +77,42 @@ class Player extends BallwarGameObject{
 		let angle = Math.atan2(ty - this.y, tx - this.x);
 		this.vx = Math.cos(angle);
 		this.vy = Math.sin(angle);
+	}
 
+	be_attacked(angle, damage){
+		this.radius -= damage;
+		if(this.radius < 10){
+			this.destroy();
+			return false;
+		}
+		this.damage_x = Math.cos(angle);
+		this.damage_y = Math.sin(angle);
+		this.damage_speed = damage * 100;
 	}
 
 	update(){
-		if(this.move_length < this.eps){
-			this.move_length = 0;
+		if(this.damage_speed > 10){
 			this.vx = this.vy = 0;
+			this.move_length = 0;
+			this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
+			this.y += this.damage_y * this.damage_speed * this.timedelta / 1000;
+			this.damage_speed *= this.friction;
 		}
 		else{
-			let move_realdist = Math.min(this.move_length, this.speed * this.timedelta / 1000);
-			this.x += this.vx *	move_realdist;
-			this.y += this.vy * move_realdist;
-			this.move_length -= move_realdist;
+			if(this.move_length < this.eps){
+				this.move_length = 0;
+				this.vx = this.vy = 0;
+				if(!this.is_me){
+					let tx = Math.random() * this.playground.width, ty = Math.random() * this.playground.height;
+					this.move_to(tx, ty);
+				}
+			}
+			else{
+				let move_realdist = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+				this.x += this.vx *	move_realdist;
+				this.y += this.vy * move_realdist;
+				this.move_length -= move_realdist;
+			}
 		}
 		this.render();
 	}

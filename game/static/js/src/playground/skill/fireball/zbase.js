@@ -1,5 +1,5 @@
 class FireBall extends BallwarGameObject{
-	constructor(playground, player, x , y, radius, vx, vy, color, speed, move_length){
+	constructor(playground, player, x , y, radius, vx, vy, color, speed, move_length, damage){
 		super();
 		this.playground = playground;
 		this.player = player;
@@ -12,6 +12,7 @@ class FireBall extends BallwarGameObject{
 		this.color = color;
 		this.speed = speed;
 		this.move_length = move_length;
+		this.damage = damage;
 		this.eps = 0.1;
 	}
 
@@ -30,7 +31,32 @@ class FireBall extends BallwarGameObject{
 		this.y += this.vy * move_realdist;
 		this.move_length -= move_realdist;
 
+		for(let i=0;i<this.playground.players.length;++i){
+			let player = this.playground.players[i];
+			if(this.player !==	player && this.check_collision(player)){
+				this.attack(player);
+			}
+		}
+
 		this.render();
+	}
+
+	get_dist(x1, y1, x2, y2){
+		let dx = x1 - x2;
+		let dy = y1 - y2;
+		return Math.sqrt(dx * dx + dy * dy);
+	}
+
+	check_collision(player){
+		let dist = this.get_dist(this.x, this.y, player.x, player.y);
+		if(dist < this.radius + player.radius) return true;
+		return false;
+	}
+
+	attack(player){
+		let angle = Math.atan2(player.y - this.y, player.x - this.x);
+		player.be_attacked(angle, this.damage);
+		this.destroy();
 	}
 
 	render(){
