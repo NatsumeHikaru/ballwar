@@ -1,4 +1,4 @@
-class BallwarGame{
+export class BallwarGame{
 	constructor(id){
 		this.id = id;
 		this.$ballwar_game = $('#' + id);

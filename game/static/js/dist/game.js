@@ -1,4 +1,4 @@
-class BallwarGameMenu{
+export class BallwarGameMenu{
 	constructor(root){
 		this.root = root;
 		this.$menu = $(`
@@ -55,13 +55,124 @@ class BallwarGameMenu{
 		this.$menu.hide();
 	}
 }
+let BALLWAR_GAME_OBJECTS= [];
+
+class BallwarGameObject{
+	constructor(){
+		BALLWAR_GAME_OBJECTS.push(this);
+		this.called_start = false; 
+		this.timedelta = 0;
+	}
+
+	start(){ // only be executed for the first time
+
+	}
+
+	update(){ // erverytime executed
+
+	}
+
+	on_destroy(){
+
+	}
+
+	destroy(){
+		this.on_destroy();
+		for(let i=0;i<BALLWAR_GAME_OBJECTS.length;i++){
+			if(BALLWAR_GAME_OBJECT[i] === this){
+				BALLWAR_GAME_OBJECT.splice(i, 1);
+				break;
+			}
+		}
+	}
+}
+
+let last_timestamp;
+let	BALLWAR_GAME_ANIMATION = function(timestamp){
+	for(let i=0;i<BALLWAR_GAME_OBJECTS.length;i++){
+		let obj=BALLWAR_GAME_OBJECTS[i];
+		if(!obj.called_start){
+			obj.start();
+			obj.called_start = true;
+		}
+		else{
+			obj.timedelta = timestamp - last_timestamp;
+			obj.update();
+		}
+	}
+	last_timestamp = timestamp;
+
+	requestAnimationFrame(BALLWAR_GAME_ANIMATION);
+}
+
+requestAnimationFrame(BALLWAR_GAME_ANIMATION);
+class GameMap extends BallwarGameObject{
+	constructor(playground){
+		super(); // 调用基类构造函数
+		this.playground = playground;
+		this.$canvas = $(`<canvas></canvas>`);
+		this.ctx = this.$canvas[0].getContext('2d');
+		this.ctx.canvas.width = this.playground.width;
+		this.ctx.canvas.height = this.playground.height;
+		this.playground.$playground.append(this.$canvas);
+
+	}
+
+	start(){
+	}
+
+	update(){
+		this.render();
+	}
+
+	render(){
+		this.ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+		this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+	}
+
+}
+class Player extends BallwarGameObject{
+	constructor(playground, x, y, radius, color, speed, is_me){
+		super();
+		this.playground = playground;
+		this.ctx = this.playground.game_map.ctx;
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.color = color;
+		this.speed = speed;
+		this.is_me = is_me;
+		this.eps = 0.1;
+	}
+
+	start(){
+
+	}
+
+	update(){
+		this.render();
+	}
+
+	render(){
+		this.ctx.beginPath();
+		this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		this.ctx.fillStyle = this.color;
+		this.ctx.fill();
+	}
+}
 class BallwarGamePlayground{
 	constructor(root){
 		this.root = root;
 		this.$playground = $(`
-		<div>游戏界面</div>
+		<div class='ballwar-game-playground'></div>
 			`);
+		//this.hide();
 		this.root.$ballwar_game.append(this.$playground);
+		this.width = this.$playground.width();
+		this.height = this.$playground.height();
+		this.game_map = new GameMap(this);
+		this.players = [];
+		this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, 'white', this.height*0.15, true));
 
 		this.start();
 	}
@@ -78,7 +189,7 @@ class BallwarGamePlayground{
 		this.$playground.hide();
 	}
 }
-class BallwarGame{
+export class BallwarGame{
 	constructor(id){
 		this.id = id;
 		this.$ballwar_game = $('#' + id);

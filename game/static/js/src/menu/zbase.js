@@ -1,4 +1,4 @@
-class BallwarGameMenu{
+export class BallwarGameMenu{
 	constructor(root){
 		this.root = root;
 		this.$menu = $(`
