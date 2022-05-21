@@ -17,6 +17,7 @@ class Player extends BallwarGameObject{
 		this.is_me = is_me;
 		this.eps = 0.1;
 		this.friction = 0.5;
+		this.time_spent = 0;
 		this.cur_skill = null;
 	}
 
@@ -80,16 +81,6 @@ class Player extends BallwarGameObject{
 	}
 
 	be_attacked(angle, damage){
-		this.radius -= damage;
-		if(this.radius < 10){
-			this.destroy();
-			return false;
-		}
-		this.damage_x = Math.cos(angle);
-		this.damage_y = Math.sin(angle);
-		this.damage_speed = damage * 100;
-		this.speed *= 1.1;
-
 		for(let i=0;i<10+Math.random()*5;++i){
 			let x = this.x, y = this.y;
 			let radius = this.radius * Math.random() * 0.08;
@@ -100,9 +91,26 @@ class Player extends BallwarGameObject{
 			let move_length = this.radius * Math.random() * 5;
 			new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
 		}
+
+		this.radius -= damage;
+		if(this.radius < 10){
+			this.destroy();
+			return false;
+		}
+		this.damage_x = Math.cos(angle);
+		this.damage_y = Math.sin(angle);
+		this.damage_speed = damage * 100;
+		this.speed *= 1.1;
 	}
 
 	update(){
+		this.time_spent += this.timedelta / 1000;
+		if(!this.is_me && this.time_spent > 4 && Math.random() < 1 / 300.0){
+			let player =this.playground.players[Math.floor(Math.random() * this.playground.players.length)];
+			let x = player.x + Math.random() * 10, y = player.y + Math.random() * 10;
+			this.shoot_fireball(x, y);
+		}
+
 		if(this.damage_speed > 10){
 			this.vx = this.vy = 0;
 			this.move_length = 0;
