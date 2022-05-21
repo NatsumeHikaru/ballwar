@@ -131,6 +131,48 @@ class GameMap extends BallwarGameObject{
 	}
 
 }
+class Particle extends BallwarGameObject{
+	constructor(playground, x, y, radius, vx, vy, color, speed, move_length){
+		super();
+		this.playground = playground;
+		this.ctx = this.playground.game_map.ctx;
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.vx = vx;
+		this.vy = vy;
+		this.color = color;
+		this.speed = speed;
+		this.move_length = move_length;
+		this.eps = 3;
+		this.friction = 0.5;
+	}
+
+	start(){
+
+	}
+
+	update(){
+		if(this.speed < this.eps || this.move_length < this.eps){
+			this.destroy();
+			return false;
+		}
+		
+		let move_dist = Math.min(this.move_length, this.speed * this.timedelta / 1000);
+		this.x += this.vx * move_dist;
+		this.y += this.vy * move_dist;
+		this.speed *= this.friction;
+		this.move_length -= move_dist;
+		this.render();
+	}
+
+	render(){
+		this.ctx.beginPath();
+		this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+		this.ctx.fillStyle = this.color;
+		this.ctx.fill();
+	}
+}
 class Player extends BallwarGameObject{
 	constructor(playground, x, y, radius, color, speed, is_me){
 		super();
@@ -149,7 +191,7 @@ class Player extends BallwarGameObject{
 		this.speed = speed;
 		this.is_me = is_me;
 		this.eps = 0.1;
-		this.friction = 0.8;
+		this.friction = 0.5;
 		this.cur_skill = null;
 	}
 
@@ -221,10 +263,22 @@ class Player extends BallwarGameObject{
 		this.damage_x = Math.cos(angle);
 		this.damage_y = Math.sin(angle);
 		this.damage_speed = damage * 100;
+		this.speed *= 1.1;
+
+		for(let i=0;i<10+Math.random()*5;++i){
+			let x = this.x, y = this.y;
+			let radius = this.radius * Math.random() * 0.08;
+			let angle = Math.PI * 2 * Math.random();
+			let vx = Math.cos(angle), vy = Math.sin(angle);
+			let color = this.color;
+			let speed = this.speed * 10;
+			let move_length = this.radius * Math.random() * 5;
+			new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
+		}
 	}
 
 	update(){
-		if(this.damage_speed > this.eps){
+		if(this.damage_speed > 10){
 			this.vx = this.vy = 0;
 			this.move_length = 0;
 			this.x += this.damage_x * this.damage_speed * this.timedelta / 1000;
@@ -340,10 +394,15 @@ class BallwarGamePlayground{
 		this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, 'white', this.height*0.15, true));
 
 		for(let i=0;i<5;++i){
-			this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, '    red', this.height*0.15, false));
+			this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, this.get_random_color(), this.height*0.15, false));
 		}
 
 		this.start();
+	}
+
+	get_random_color(){
+		let colors = ["blue", "red", "pink", "grey", "green"];
+		return colors[Math.floor(Math.random() * 5)];
 	}
 
 	start(){

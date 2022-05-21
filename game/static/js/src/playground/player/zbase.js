@@ -16,7 +16,7 @@ class Player extends BallwarGameObject{
 		this.speed = speed;
 		this.is_me = is_me;
 		this.eps = 0.1;
-		this.friction = 0.8;
+		this.friction = 0.5;
 		this.cur_skill = null;
 	}
 
@@ -88,6 +88,18 @@ class Player extends BallwarGameObject{
 		this.damage_x = Math.cos(angle);
 		this.damage_y = Math.sin(angle);
 		this.damage_speed = damage * 100;
+		this.speed *= 1.1;
+
+		for(let i=0;i<10+Math.random()*5;++i){
+			let x = this.x, y = this.y;
+			let radius = this.radius * Math.random() * 0.08;
+			let angle = Math.PI * 2 * Math.random();
+			let vx = Math.cos(angle), vy = Math.sin(angle);
+			let color = this.color;
+			let speed = this.speed * 10;
+			let move_length = this.radius * Math.random() * 5;
+			new Particle(this.playground, x, y, radius, vx, vy, color, speed, move_length);
+		}
 	}
 
 	update(){
