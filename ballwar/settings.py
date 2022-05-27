@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e_&-7l3pa8(_65ub0qkksx-d$=v%^)*(v+%8i&7u$bmdp5a1ww
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["47.241.123.15"]
+ALLOWED_HOSTS = ["47.241.123.15", "game.hikaru.com.cn", "127.0.0.1"]
 
 
 # Application definition
