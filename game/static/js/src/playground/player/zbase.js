@@ -19,6 +19,14 @@ class Player extends BallwarGameObject{
 		this.friction = 0.5;
 		this.time_spent = 0;
 		this.cur_skill = null;
+
+		if(this.is_me){
+			this.img = new Image();
+			this.img.src = this.playground.root.settings.photo;
+			//this.img.src = "https://hikaru.com.cn/wp-content/uploads/2021/09/68656803_p0.png";
+			console.log(this.img.src);
+			console.log("hello");
+		}
 	}
 
 	start(){
@@ -138,9 +146,20 @@ class Player extends BallwarGameObject{
 	}
 
 	render(){
-		this.ctx.beginPath();
-		this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-		this.ctx.fillStyle = this.color;
-		this.ctx.fill();
+		if(this.is_me){
+			this.ctx.save();
+			this.ctx.beginPath();
+			this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+			this.ctx.stroke();
+			this.ctx.clip();
+			this.ctx.drawImage(this.img, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2); 
+			this.ctx.restore();
+		}
+		else{
+			this.ctx.beginPath();
+			this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+			this.ctx.fillStyle = this.color;
+			this.ctx.fill();
+		}
 	}
 }

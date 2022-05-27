@@ -6,4 +6,4 @@ class Player(models.Model):
     photo = models.URLField(max_length=256, blank=True)
 
     def __str__(self):
-        return str(user)
+        return str(self.user)

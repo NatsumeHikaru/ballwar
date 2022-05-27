@@ -21,6 +21,7 @@ export class BallwarGameMenu{
 			</div>
 		</div>
 			`);
+		this.$menu.hide();
 		this.root.$ballwar_game.append(this.$menu);
 		this.$single_mode = this.$menu.find('.ballwar-game-menu-field-item-single-mode');
 		this.$multi_mode = this.$menu.find('.ballwar-game-menu-field-item-multi-mode');
