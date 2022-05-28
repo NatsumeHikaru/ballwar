@@ -117,6 +117,7 @@ class GameMap extends BallwarGameObject{
 		this.ctx.canvas.height = this.playground.height;
 		this.playground.$playground.append(this.$canvas);
 
+		this.start();
 	}
 
 	start(){
@@ -413,12 +414,12 @@ class BallwarGamePlayground{
 		this.$playground = $(`
 		<div class='ballwar-game-playground'></div>
 			`);
-		//this.hide();
+		this.hide();
 		this.root.$ballwar_game.append(this.$playground);
-		this.width = this.$playground.width();
+	/*	this.width = this.$playground.width();
 		this.height = this.$playground.height();
 		this.game_map = new GameMap(this);
-	/*	this.players = [];
+		this.players = [];
 		this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, 'white', this.height*0.15, true));
 
 		for(let i=0;i<5;++i){
@@ -438,11 +439,10 @@ class BallwarGamePlayground{
 	}
 
 	show(){ // show playground
-		this.$playground.show();/*
-		this.root.$ballwar_game.append(this.$playground);
+		this.$playground.show();
 		this.width = this.$playground.width();
 		this.height = this.$playground.height();
-		this.game_map = new GameMap(this);*/
+		this.game_map = new GameMap(this);
 		this.players = [];
 		this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, 'white    ', this.height*0.15, true));
 		for(let i=0;i<5;++i){

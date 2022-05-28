@@ -8,6 +8,7 @@ class GameMap extends BallwarGameObject{
 		this.ctx.canvas.height = this.playground.height;
 		this.playground.$playground.append(this.$canvas);
 
+		this.start();
 	}
 
 	start(){
