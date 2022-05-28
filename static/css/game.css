@@ -4,7 +4,6 @@
 	background-image: url('/static/img/menu/background.jpg');
 	background-size: 100% 100%;
 	user-select: none;
-	
 }
 
 .ballwar-game-menu-field{
@@ -77,3 +76,109 @@
 	height: 100%;
 	user-select: none;
 }
+
+.ballwar-game-settings{
+	width: 100%;
+	height: 100%;
+	background-image: url('/static/img/menu/background.jpg');
+	background-size: 100% 100%;
+	user-select: none;
+}
+
+.ballwar-game-settings-login{
+	height: 41vh;
+	width: 20vw;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 0, 0.7);
+	border-radius: 6px;
+}
+
+.ballwar-game-settings-login-title{
+	color: white;
+	font-size: 3vh;
+	text-align: center;
+	padding-top: 2vh;
+	margin-bottom: 2vh;
+}
+
+.ballwar-game-settings-login-username{
+	display: block;
+	height: 7vh;
+}
+
+.ballwar-game-settings-login-password{
+	display: block;
+	height: 7vh;
+}
+
+.ballwar-game-settings-login-submit{
+	display: block;
+	height: 7vh;
+}
+
+.ballwar-game-settgins-login-username-item{
+	width: 100%;
+	height: 100%;
+}
+
+.ballwar-game-settings-login-username-item > input{
+	width: 90%;
+	line-height: 3vh;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.ballwar-game-settings-login-error-message{
+	color: red;
+	font-size: 0.8vh;
+	display: inline;
+	float: left;
+	padding-left: 1vw;
+}
+
+.ballwar-game-settings-option{
+	color: white;
+	font-size: 2vh;
+	display: inline;
+	float: right;
+	padding-right: 1vw;
+	cursor: pointer;
+}
+
+.ballwar-game-settings-login-password-item > input{
+	width: 90%;
+	line-height: 3vh;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.ballwar-game-settings-login-submit-item > button{
+	color: white;
+	width: 90%;
+	line-height: 3vh;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #309804;
+	border-radius: 10px;
+}
+
+.ballwar-game-settings-register{
+	height: 49vh;
+	width: 20vw;
+	position: relative;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: rgba(0, 0, 3chjk0, 0.7);
+}
+
+
