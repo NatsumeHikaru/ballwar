@@ -113,6 +113,9 @@ class Settings{
 		this.$register_login.click(function(){
 			outer.login();
 		});
+		this.$register_submit.click(function(){
+			outer.register_on_remote();
+		});
 	}
 
 	// 在服务器上登录
@@ -130,7 +133,6 @@ class Settings{
 				password: password,
 			},
 			success: function(resp){
-				console.log(resp);
 				if(resp.result === "success"){
 					location.reload();
 				}
@@ -143,12 +145,42 @@ class Settings{
 
 	// 在服务器上注册
 	register_on_remote(){
+		let outer = this;
+		let username = this.$register_username.val();
+		let password = this.$register_password.val();
+		let password_confirm = this.$register_password_confirm.val();
+		this.$register_error_message.empty();
 
+		$.ajax({
+			url: "https://game.hikaru.com.cn/settings/register/",
+			type: "GET",
+			data:{
+				username: username,
+				password: password,
+				password_confirm: password_confirm,
+			},
+			success: function(resp){
+				if(resp.result === "success"){
+					location.reload();
+				}
+				else{
+					outer.$register_error_message.html(resp.result);
+				}
+			}
+		});
 	}
 
 	// 在服务器上登出
 	logout_on_remote(){
-
+		$.ajax({
+			url: "https://game.hikaru.com.cn/settings/logout/",
+			type: "GET",
+			success: function(resp){
+				if(resp.result === "success"){
+					location.reload();
+				}
+			}
+		});
 	}
 
 	// 打开注册界面
@@ -159,7 +191,6 @@ class Settings{
 
 	// 打开登录界面
 	login(){
-		console.log(this.$register);
 		this.$register.hide();
 		this.$login.show();
 	}
