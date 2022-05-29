@@ -415,17 +415,7 @@ class BallwarGamePlayground{
 		<div class='ballwar-game-playground'></div>
 			`);
 		this.hide();
-		this.root.$ballwar_game.append(this.$playground);
-	/*	this.width = this.$playground.width();
-		this.height = this.$playground.height();
-		this.game_map = new GameMap(this);
-		this.players = [];
-		this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, 'white', this.height*0.15, true));
-
-		for(let i=0;i<5;++i){
-			this.players.push(new Player(this, this.width/2, this.height/2, this.height*0.05, this.get_random_color(), this.height*0.15, false));
-		}*/
-
+		
 		this.start();
 	}
 
@@ -440,6 +430,7 @@ class BallwarGamePlayground{
 
 	show(){ // show playground
 		this.$playground.show();
+		this.root.$ballwar_game.append(this.$playground);
 		this.width = this.$playground.width();
 		this.height = this.$playground.height();
 		this.game_map = new GameMap(this);
@@ -464,25 +455,25 @@ class Settings{
 		this.$settings = $(`
 		<div class="ballwar-game-settings">
 			<div class="ballwar-game-settings-login">
-				<div class="ballwar-game-settings-login-title">
+				<div class="ballwar-game-settings-title">
 				登录
 				</div>
-				<div class="ballwar-game-settings-login-username">
-					<div class="ballwar-game-settings-login-username-item">
+				<div class="ballwar-game-settings-username">
+					<div class="ballwar-game-settings-username-item">
 						<input type="text" placeholder="用户名">
 					</div>
 				</div>
-				<div class="ballwar-game-settings-login-password">
-					<div class="ballwar-game-settings-login-password-item">
+				<div class="ballwar-game-settings-password">
+					<div class="ballwar-game-settings-password-item">
 						<input type="password" placeholder="密码">
 					</div>
 				</div>
-				<div class="ballwar-game-settings-login-submit">
-					<div class="ballwar-game-settings-login-submit-item">
+				<div class="ballwar-game-settings-submit">
+					<div class="ballwar-game-settings-submit-item">
 						<button>登录</button>
 					</div>
 				</div>
-				<div class="ballwar-game-settings-login-error-message">
+				<div class="ballwar-game-settings-error-message">
 					用户名密码错误
 				</div>
 				<div class="ballwar-game-settings-option">
@@ -490,6 +481,35 @@ class Settings{
 				</div>
 			</div>
 			<div class="ballwar-game-settings-register">
+				<div class="ballwar-game-settings-title">
+				注册
+				</div>
+				<div class="ballwar-game-settings-username">
+					<div class="ballwar-game-settings-username-item">
+						<input type="text" placeholder="用户名">
+					</div>
+				</div>
+				<div class="ballwar-game-settings-password">
+					<div class="ballwar-game-settings-password-item">
+						<input type="password" placeholder="密码">
+					</div>
+				</div>
+				<div class="ballwar-game-settings-password">
+					<div class="ballwar-game-settings-password-item">
+						<input type="password" placeholder="确认密码">
+					</div>
+				</div>
+				<div class="ballwar-game-settings-submit">
+					<div class="ballwar-game-settings-submit-item">
+						<button>注册</button>
+					</div>
+				</div>
+				<div class="ballwar-game-settings-error-message">
+					用户名密码错误
+				</div>
+				<div class="ballwar-game-settings-option">
+					登录
+				</div>
 			</div>
 		</div>
 			`);
@@ -509,7 +529,7 @@ class Settings{
 	// 打开注册界面
 	register(){
 		this.$login.hide();
-		this.$reigster.show();
+		this.$register.show();
 	}
 
 	// 打开登录界面
@@ -536,7 +556,7 @@ class Settings{
 					outer.root.menu.show();
 				}
 				else{
-					outer.login();
+					outer.register();
 				}
 			}
 		});
