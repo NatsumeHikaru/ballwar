@@ -26,7 +26,6 @@ class Settings{
 					</div>
 				</div>
 				<div class="ballwar-game-settings-error-message">
-					用户名密码错误
 				</div>
 				<div class="ballwar-game-settings-option">
 					注册
@@ -41,12 +40,12 @@ class Settings{
 						<input type="text" placeholder="用户名">
 					</div>
 				</div>
-				<div class="ballwar-game-settings-password">
+				<div class="ballwar-game-settings-password ballwar-game-settings-password-first">
 					<div class="ballwar-game-settings-password-item">
 						<input type="password" placeholder="密码">
 					</div>
 				</div>
-				<div class="ballwar-game-settings-password">
+				<div class="ballwar-game-settings-password ballwar-game-settings-password-second">
 					<div class="ballwar-game-settings-password-item">
 						<input type="password" placeholder="确认密码">
 					</div>
@@ -57,7 +56,6 @@ class Settings{
 					</div>
 				</div>
 				<div class="ballwar-game-settings-error-message">
-					用户名密码错误
 				</div>
 				<div class="ballwar-game-settings-option">
 					登录
@@ -65,9 +63,23 @@ class Settings{
 			</div>
 		</div>
 			`);
-		this.$login = this.$settings.find("ballwar-game-settings-login");
+		this.$login = this.$settings.find(".ballwar-game-settings-login");
+		this.$login_username = this.$login.find(".ballwar-game-settings-username input");
+		this.$login_password = this.$login.find(".ballwar-game-settings-password input");
+		this.$login_submit = this.$login.find(".ballwar-game-settings-submit button");
+		this.$login_error_message = this.$login.find(".ballwar-game-settings-error-message");
+		this.$login_register = this.$login.find(".ballwar-game-settings-option");
+
 		this.$login.hide();
-		this.$register = this.$settings.find("ballwar-game-settings-register");
+
+		this.$register = this.$settings.find(".ballwar-game-settings-register");
+		this.$register_username = this.$register.find(".ballwar-game-settings-username input");
+		this.$register_password = this.$register.find(".ballwar-game-settings-password-first input");
+		this.$register_password_confirm = this.$register.find(".ballwar-game-settings-password-second input");
+		this.$register_submit =	this.$register.find(".ballwar-game-settings-submit button");
+		this.$register_error_message = this.$register.find(".ballwar-game-settings-error-message");
+		this.$register_login = this.$register.find(".ballwar-game-settings-option");
+
 		this.$register.hide();
 		this.root.$ballwar_game.append(this.$settings);
 
@@ -76,6 +88,67 @@ class Settings{
 
 	start(){
 		this.getinfo();
+		this.add_listening_events();
+	}
+
+	add_listening_events(){
+		this.add_listening_events_login();
+		this.add_listening_events_register();
+	}
+
+	// 跳转至注册界面
+	add_listening_events_login(){
+		let outer = this;
+		this.$login_register.click(function(){
+			outer.register();
+		});
+		this.$login_submit.click(function(){
+			outer.login_on_remote();
+		});
+	}
+
+	// 跳转至登录界面
+	add_listening_events_register(){
+		let outer = this;
+		this.$register_login.click(function(){
+			outer.login();
+		});
+	}
+
+	// 在服务器上登录
+	login_on_remote(){
+		let outer = this;
+		let username = this.$login_username.val();
+		let password = this.$login_password.val();
+		this.$login_error_message.empty();
+
+		$.ajax({
+			url: "https://game.hikaru.com.cn/settings/login/",
+			type: "GET",
+			data: {
+				username: username,
+				password: password,
+			},
+			success: function(resp){
+				console.log(resp);
+				if(resp.result === "success"){
+					location.reload();
+				}
+				else{
+					outer.$login_error_message.html(resp.result);
+				}
+			}
+		});
+	}
+
+	// 在服务器上注册
+	register_on_remote(){
+
+	}
+
+	// 在服务器上登出
+	logout_on_remote(){
+
 	}
 
 	// 打开注册界面
@@ -86,6 +159,7 @@ class Settings{
 
 	// 打开登录界面
 	login(){
+		console.log(this.$register);
 		this.$register.hide();
 		this.$login.show();
 	}
@@ -102,18 +176,14 @@ class Settings{
 				if(resp.result === "success"){
 					outer.username = resp.username;
 					outer.photo = resp.photo;
-					console.log("test");
-					console.log($('your-img').src = resp.photo);
 					outer.hide();
 					outer.root.menu.show();
 				}
 				else{
-					outer.register();
+					outer.login();
 				}
 			}
 		});
-		console.log(outer);
-		console.log(outer.photo);
 	}
 
 	hide(){
