@@ -238,6 +238,18 @@ class Player extends BallwarGameObject{
 				outer.cur_skill = "fireball";
 				return false;
 			}
+			else if(e.which === 87){ // W
+				outer.move_to(outer.x, outer.y - 5);
+			}
+			else if(e.which === 65){ // A
+				outer.move_to(outer.x - 5, outer.y);
+			}
+			else if(e.which === 83){ //S
+				outer.move_to(outer.x, outer.y + 5);
+			}
+			else if(e.which === 68){ //D
+				outer.move_to(outer.x + 5, outer.y);
+			}
 		});
 	}
 
@@ -249,6 +261,9 @@ class Player extends BallwarGameObject{
 		let color = "orange";
 		let speed = this.playground.height * 0.55;
 		let move_length = this.playground.height * 1;
+		if(this.is_me && this.playground.players[0] != this){
+			return;
+		}
 		new FireBall(this.playground, this, x, y, radius, vx, vy, color, speed, move_length, this.playground.height * 0.01);
 	}
 
